@@ -17,4 +17,6 @@ The file contains orders in each line in a specific format. Lambda function read
     -   Scale out to increase rate limit.
     -   Allow BATCH put operations.
 
--
+-   At lambda side there can be several improvements depending on the expected order load and target API rate limit.
+    -   Lamda is designed to run smaller actions. This type of long-running actions is not designed for lambda.
+    -   Morover, it is also costly for lambda. With the current rate limit and this solution, we are waiting in the lambda idle which costs money.

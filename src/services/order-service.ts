@@ -47,24 +47,6 @@ export async function sendOrdersPerInterval(orders: Order[]): Promise<void> {
     });
 }
 
-export async function sendOrdersSequentially(orders: Order[]): Promise<void> {
-    let sentOrders = 0,
-        numOfRequests = 0;
-    while (orders.length) {
-        const order = orders.pop();
-        numOfRequests++;
-        const response = await putJson('/order', order);
-        if (response != RESPONSE.OK) {
-            logger.warn(`RESPONSE: ${response}: requeing the order.`);
-            orders.push(order);
-            return;
-        }
-        sentOrders++;
-    }
-
-    logger.debug(`ALL ${sentOrders} orders are sent with ${numOfRequests} requests.`);
-}
-
 function toOrders(text: string): Order[] {
     return text
         .split(/\r?\n/)
